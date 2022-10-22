@@ -77,6 +77,7 @@ UMA1014::writeState() {
     Wire.write(registerC);
     Wire.write(registerD);
     Wire.endTransmission();
+    delay(100); // chip cannot handle too quick writes apparently?
 }
 
 int UMA1014::getStatusRegister(struct UMA1014::status *currentState) {
