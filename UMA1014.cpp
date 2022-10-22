@@ -13,14 +13,18 @@ UMA1014::init() {
 static const int refDividers[16] = {128, 160, 192, 240, 256, 320, 384, 480, 512, 640, 768, 960, 1024, 1280, 1536, 1920};
 
 void UMA1014::setPLLfreq(uint32_t vcoFreq, uint32_t referenceFreq) {
-    uint8_t bestRefDivider = 1;
-    uint32_t bestMainDivider = 1;
+    uint8_t bestRefDivider = 0;
+    uint32_t bestMainDivider = 2048;
     uint32_t bestError = 0xFFFFFFFF;
 
     for(int i = 0; i < 16; i++) {
         uint32_t channelStep = referenceFreq / refDividers[i];
         uint32_t mainDivider = vcoFreq / channelStep;
         
+        if((mainDivider < 2048) || (mainDivider > 262143)) {
+            continue;
+        }
+
         uint32_t resultingFreq = mainDivider * channelStep;
         uint32_t error = 0;
         if(resultingFreq > vcoFreq) {
