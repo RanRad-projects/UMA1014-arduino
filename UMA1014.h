@@ -11,7 +11,7 @@ public:
     init();
 
     /* figures out the best divider combination */
-    void setPLLfreq(uint32_t vcoFreq, uint32_t refereceFreq);
+    void setPLLfreq(uint32_t vcoFreq, uint32_t referenceFreq);
 
     struct state {
         bool disableAlarm = true;
